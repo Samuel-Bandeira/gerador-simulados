@@ -561,19 +561,17 @@ const S = {
     columnCount: 2,
     columnGap: "20px",
     columnRule: "1px solid #c0c0c0",
-    // Garante que filhos com overflow não escapem da coluna
-    overflow: "hidden" as const,
+    // NÃO usar overflow:hidden aqui — criaria block formatting context e
+    // impediria a fragmentação de conteúdo entre colunas e páginas.
   } as React.CSSProperties,
 
   question: {
-    // SEM break-inside: avoid — questões fluem entre colunas como no ENEM real.
-    // Se uma questão não cabe em uma coluna, o texto continua na próxima coluna
-    // (e na próxima página se necessário), em vez de pular a página inteira.
+    // SEM break-inside:avoid e SEM overflow:hidden — ambos criam block
+    // formatting context e impedem que questões longas fluam entre colunas.
+    // wordBreak no statement e maxWidth nas imagens controlam o overflow de conteúdo.
     marginBottom: "14px",
     paddingBottom: "10px",
     borderBottom: "1px solid #ddd",
-    overflow: "hidden" as const,
-    minWidth: 0,
   } as React.CSSProperties,
 
   questionTitle: {
